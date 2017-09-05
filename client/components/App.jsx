@@ -1,9 +1,10 @@
 import React from "react";
+import { SelectCategory } from "./SelectCategory/SelectCategory.jsx";
 
 const App = () => {
     return(
       <div>
-        <h1>Hello</h1>
+        <SelectCategory />
       </div>
     );
 };
