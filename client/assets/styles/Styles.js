@@ -22,6 +22,7 @@ export const styles = {
     display: 'flex',
     alignItems: 'center',
     backgroundColor: '#e0e0e0',
+    margin: '5px',
     borderRadius: '2px',
     textDecoration: 'none',
     cursor: 'pointer'
@@ -35,6 +36,7 @@ export const styles = {
     cursor: 'pointer'
   },
   subCategoryWrapper: {
+    position: 'relative',
     display: 'none',
   },
   subCategoryContent: {

@@ -19,7 +19,6 @@ export class SearchCategories extends Component {
             style={styles.input}
             placeholder="Type here to search for what you want to teach" />
         </div>
-          {/* <input type="text" value="İstanbul, Adıyaman, Adana, Urfa" data-role="tagsinput" className="form-control" /> */}
       </div>
     );
   }

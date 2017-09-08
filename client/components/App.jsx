@@ -1,5 +1,5 @@
 import React from "react";
-import { SelectCategory } from "./SelectCategory/SelectCategory.jsx";
+import SelectCategory from "./SelectCategory/SelectCategory.jsx";
 
 const App = () => {
     return(

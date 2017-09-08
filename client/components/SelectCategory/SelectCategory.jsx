@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { gql, graphql } from 'react-apollo';
 import _ from 'underscore';
 
 import { SearchCategories } from '../SearchCategories/SearchCategories.jsx';
-import { SubCategory } from '../SubCategory/SubCategory.jsx';
 import { Category } from '../Category/Category.jsx';
 
 import { styles } from '../../assets/styles/Styles';
 
-export class SelectCategory extends Component {
+class SelectCategory extends Component {
   constructor() {
     super();
     this.state = {
-      selectedSubjects: ['Christian Religious Studies', 'Civic Education', 'Agricultural Science'],
+      selectedSubjects: [],
       categorySelected: false,
       categoryOpen: false
     };
@@ -57,6 +58,14 @@ export class SelectCategory extends Component {
   }
 
   render() {
+    const { data: {allCategories = [] } = {} } = this.props;
+
+    const noSubjectsSelected = (
+      this.state.selectedSubjects.length === 0
+      ) ? (
+        <p className="center-block">No subjects yet. Subjects you select will appear here.</p>
+      ) : null;
+
     return(
       <div className="container">
         <div style={styles.space} />
@@ -77,6 +86,7 @@ export class SelectCategory extends Component {
                   <p style={styles.subtitle}>Subjects you want to teach</p>
                 </div>
                 <div id="seleceted-subject" style={styles.subjects}>
+                  { noSubjectsSelected }
                   {
                     this.state.selectedSubjects.map((selectedSubject, index) =>
                       <p key={index} style={styles.eachSubject}>
@@ -112,14 +122,13 @@ export class SelectCategory extends Component {
             <div style={styles.padding10}>
               <div className="row" style={styles.padding10}>
                 <Category
+                  categories={allCategories}
                   selected={this.state.categorySelected}
                   changeState={this.changeCategorySelected}
-                />
-                <SubCategory
                   addSubject={this.addSubject}
                   open={this.state.categoryOpen}
-                  changeState={this.changeCategoryOpen}
-                  selected={this.state.selectedSubjects}
+                  changeCategoryOpen={this.changeCategoryOpen}
+                  selectedSubjects={this.state.selectedSubjects}
                 />
               </div>
             </div>
@@ -129,3 +138,26 @@ export class SelectCategory extends Component {
     );
   }
 }
+
+SelectCategory.propTypes = {
+  data: PropTypes.object.isRequired
+};
+
+export default graphql(
+  gql `
+    query {
+      allCategories {
+        id
+        title
+        description
+        imageUrl
+        SubCategories {
+          id
+          title
+          imageUrl
+          subjects
+        }
+      }
+    }
+  `
+)(SelectCategory);
